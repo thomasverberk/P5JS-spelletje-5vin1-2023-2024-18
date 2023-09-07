@@ -1,27 +1,64 @@
-var horizontaalA = 120;
-var horizontaalB = 500;
-var verticaal = 170;
+var xJager = 50;
+var yJager = 50;
+var xProoi = 800;
+var yProoi = 175;
 
 function setup() {
-  canvas = createCanvas(1000,300);
+  canvas = createCanvas(100,400);
   canvas.parent();
   textFont("Verdana");
-  textSize(30);
-  stroke('white');
-  strokeWeight(10);
-  frameRate(10);
+  textSize(140);
+  noStroke();
+  frameRate(50);
 }
 
 function draw() {
-  background('orange');
-  fill('white');
-  rect(0,0,width,40);
-  fill('black');  
-  text("positie A = " + horizontaalA + " positie B = " + horizontaalB,10,30);
-  fill('dodgerblue');
-  ellipse(horizontaalA,verticaal,200);
-  horizontaalA += 2;
-  fill('darkred')
-  ellipse(horizontaalB,verticaal,200);
-  horizontaalB += 1;
+  background('olive');
+  if (keyIsDown(LEFT_ARROW)) {
+    xJager -= 5;
+  }
+  if (keyIsDown(RIGHT_ARROW)) {
+    xJager += 5;
+  }
+  if (keyIsDown(UP_ARROW)) {
+    yJager -= 5;
+  }
+  if (keyIsDown(DOWN_ARROW)) {
+    yJager += 5;
+  }
+  if (keyIsDown(65)) {
+    xProoi -= 7; 
+  }
+  if (keyIsDown(68)) {
+    xProoi += 7;
+  }
+  if (keyIsDown(87)) {
+    yProoi -= 7;
+  }
+  if (keyIsDown(83)) {
+    yProoi += 7;
+  }
+  
+  xJager = constrain(xJager,0,width - 100);
+  yJager = constrain(yJager,0,height - 100);
+  xProoi = constrain(xProoi,0,width - 75);
+  yProoi = constrain(yProoi,0,height - 50);
+
+  if (xJager >= xProoi-100 && xJager <= xProoi + 75 && yJager >= yProoi - 100 && yJager <= yProoi + 50) {
+    fill('chartreuse');
+    eindScherm();
+  }
+  else {
+    fill('darkkhaki');
+  }
+  rect(xProoi,yProoi,75,50);
+  fill('moccasin');
+  rect(xJager,yJager,100,100);   
+}
+
+function eindScherm() {
+  background('white');
+  fill('black');
+  text("GEVANGEN!",75,250);
+  noLoop();
 }
